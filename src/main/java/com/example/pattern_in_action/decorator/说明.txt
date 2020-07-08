@@ -1,2 +1,20 @@
 代理+继承即可
 代理风涌 继承生花
+
+
+其中一个接口的返回结果
+{
+  "car": {
+    "car": {
+      "car": {
+        "name": "base"
+      },
+      "name": "sport"
+    },
+    "name": "home"
+  },
+  "name": "composite"
+}
+
+a 太像函数式编程中的Functor[_] 这一点表明oop编程在category的映射时表现的笨拙 纡郁
+b 有栈的风味 往复有迹可追 此可用来fold计算 可以递进的发生 知道终止
