@@ -1,0 +1,14 @@
+案
+1 interpreter与visitor 的比较
+a 相同点 二者都明显采用了依赖倒置的本质  具体的处理由被依赖的接口中不同的方法来表达
+         即将处理聚在一处
+
+b 不同点 visitor强调的是参数的不同即 方法的重构
+         interpreter强调的是方法名不同 参数一致
+
+c 这一点的不同 恰好说明了 visitor与interpreter 可以互激 如同阴阳
+
+如果说
+interpreter 是把一种语言翻译成不同其他语言
+那么 visitor则在其反面 将不同的语言翻译成同一种语言
+如此依赖 visitor在合  interpreter在开
