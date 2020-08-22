@@ -9,7 +9,7 @@ public enum PropertyType {
 
     FISH("fish"),
     SALT("salt"),
-    OTHER_WATERS("jiaLing");
+    OTHER_WATERS("otherWaters");
 
     String desc;
 }

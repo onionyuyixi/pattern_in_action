@@ -1,5 +1,6 @@
 package com.example.pattern_in_action.abstract_document;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -7,14 +8,10 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public abstract class AbstractWater implements Water {
+public abstract class AbstractWater implements Water, Serializable {
 
 
     final Map<String, Object> properties;
-
-    public Map<String, Object> getProperties() {
-        return properties;
-    }
 
     public AbstractWater(Map<String, Object> properties) {
         this.properties = properties;
