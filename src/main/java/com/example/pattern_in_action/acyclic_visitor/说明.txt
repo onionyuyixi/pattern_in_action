@@ -1,0 +1,4 @@
+allVisitorImpl与吾之visitor 可谓意气相投
+将所有的visitor 同聚一堂
+正是四海沸腾 百花齐放 而有行有止 不逾矩
+至于其他的visitor 则是远相呼应 然犹是偏才气隘 岂能擅居大位
