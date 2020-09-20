@@ -1,0 +1,5 @@
+这是Functional Programming 的一种范式
+能化繁为简 当然可以举重若轻了
+core: Function can be used as param token into method meanwhile can be regarded as the result of method
+
+参考博客 https://gtrefs.github.io/code/combinator-pattern/

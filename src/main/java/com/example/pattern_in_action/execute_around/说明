@@ -1,0 +1,13 @@
+参考示例url
+1 https://gtrefs.github.io/code/higher-order-functions-are-useful/
+2 https://www.deadcoderising.com/transactions-using-execute-around-method-in-java-8/
+参考书籍
+《 Functional Programming in Java 》 by Venkat Subramaniam
+ chapter5 Using lambda expressions to clean up resource
+
+3 简单言之 形如这样的操作
+    stepA -----> really action ---> stepB
+
+    stepA 开启资源（获取资源） 或者打开开关
+    stepB 关闭资源（回收资源） 或者关闭开关
+
