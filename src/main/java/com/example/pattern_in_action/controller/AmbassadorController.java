@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @RestController
 @RequestMapping("/ambassador/")
 public class AmbassadorController {
@@ -13,11 +16,21 @@ public class AmbassadorController {
 
     @PostMapping("callService")
     public Object callService(@RequestParam("num") Integer num) {
+        ExecutorService threadPool = Executors.newFixedThreadPool(2000);
         while (num >= 0) {
-            Client client = new Client();
-            client.callLogicService(num);
+            final var numCopy = num;
+            threadPool.execute(() -> {
+                Client client = new Client();
+                client.callLogicService(numCopy);
+            });
             num--;
         }
-        return "ok";
+        while (true) {
+            threadPool.shutdown();
+            if (threadPool.isTerminated()) {
+                return "ok";
+
+            }
+        }
     }
 }
