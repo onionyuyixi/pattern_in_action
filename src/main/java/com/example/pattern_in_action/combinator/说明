@@ -3,3 +3,6 @@
 core: Function can be used as param token into method meanwhile can be regarded as the result of method
 
 参考博客 https://gtrefs.github.io/code/combinator-pattern/
+
+
+余案 interface 有其自身的完备 独立 并非一定要假托继承者
