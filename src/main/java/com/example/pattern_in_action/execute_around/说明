@@ -6,8 +6,11 @@
  chapter5 Using lambda expressions to clean up resource
 
 3 简单言之 形如这样的操作
-    stepA -----> really action ---> stepB
+    stepA -----> really action(用一個函數來匹配即可) ---> stepB
 
     stepA 开启资源（获取资源） 或者打开开关
     stepB 关闭资源（回收资源） 或者关闭开关
+
+
+4 跟模板模式 有相通的地方 可以互相資發
 
