@@ -1,0 +1,9 @@
+1 一个方法 我们可以看做许多流程的不断处理  最后一步再来收集  （收集可以有种行为 以是否产生side effect为准的话 即是是否是FP）
+
+2 so we can ignore the side effect unit the last step if we can keep fp characteristic
+
+3 then wo get the side effect from the wrapper
+
+4 in a word ,delay the side effect at last
+
+5 implement ,scala  by type   java could abstract class
