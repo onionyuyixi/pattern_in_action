@@ -16,11 +16,12 @@ trait Monad[F[_]] extends Functor[F] {
 
   def map2[A, B, C](fa: F[A], fb: F[B])(f: (A, B) => C): F[C] =
     flatMap(fa)(a => map(fb)(b => f(a, b)))
-//      = {
-//      val afc: A => F[C] = (a: A) => map(fb)(b => f.curried.apply(a).apply(b))
-//      val result: F[C] = flatMap(fa)(afc)
-//      result
-//    }
+
+  //      = {
+  //      val afc: A => F[C] = (a: A) => map(fb)(b => f.curried.apply(a).apply(b))
+  //      val result: F[C] = flatMap(fa)(afc)
+  //      result
+  //    }
 
   def as[A, B](a: F[A])(b: B): F[B] = map(a)(_ => b)
 
@@ -29,7 +30,7 @@ trait Monad[F[_]] extends Functor[F] {
   def replicateM[A](n: Int)(f: F[A]): F[List[A]] =
     LazyList.fill(n)(f).foldRight(unit(List[A]()))(map2(_, _)(_ :: _))
 
-  def replicateM_[A](n: Int)(f: F[A]): F[Unit] = foreachM(LazyList.fill(n)(f))(skip)
+//  def replicateM_[A](n: Int)(f: F[A]): F[Unit] = foreachM(LazyList.fill(n)(f))(skip)
 
 
   def foreachM[A](l: LazyList[A])(f: A => F[Unit]): F[Unit] =
@@ -42,12 +43,35 @@ trait Monad[F[_]] extends Functor[F] {
 
   def foldM[A, B](l: LazyList[A])(z: B)(f: (B, A) => F[B]): F[B] =
     l match {
-      case h #:: t => f(z, h)
+      case h #:: t => f(z, h) flatMap (z2 => foldM(t)(z2)(f))
       case _ => unit(z)
     }
 
+//  def sequence_[A](fs: LazyList[F[A]]): F[Unit] = foreachM(fs)(skip)
 
-  implicit def toMonadic[A](a:F[A]):Monadic[F,A] = new Monadic[F,A] {
+//  def when[A](b: Boolean)(fa: => F[A]): F[Boolean] = if (b) as(fa)(true) else unit(fa)
+
+  def forever[A, B](a: F[A]): F[B] = {
+    lazy val t: F[B] = a flatMap (_ => t)
+    t
+  }
+
+//  def while_(a: F[Boolean])(b: F[Unit]): F[Unit] = {
+//    lazy val t: F[Unit] = while_(a)(b)
+//    a flatMap (c => skip(when(c)(t)))
+//  }
+
+  def doWhile[A](a: F[A])(cond: A => F[Boolean]): F[Unit] = for {
+    a1 <- a
+    ok <- cond(a1)
+    _ <- if (ok) doWhile(a)(cond) else unit(())
+  } yield ()
+
+
+//def foreachM[A](l:LazyList[A])(f:A=>F[Unit]):F[Unit] = foldM_(l)(())((u,a)=>skip(f(a)))
+
+
+  implicit def toMonadic[A](a: F[A]): Monadic[F, A] = new Monadic[F, A] {
     override val F: Monad[F] = Monad.this
 
     override def get: F[A] = a
@@ -83,11 +107,30 @@ trait Monadic[F[_], A] {
 
   def replicateM(n: Int) = F.replicateM(n)(a)
 
-  def replicateM_(n: Int) = F.replicateM_(n)(a)
+//  def replicateM_(n: Int) = F.replicateM_(n)(a)
+
+  //  def foreachM
+
+
 }
 
 
+object Test extends App {
 
+  val intMonad = new Monad[List] {
+    override def unit[Int](a: => Int): List[Int] = List(a)
+
+    override def flatMap[Int, B](a: List[Int])(f: Int => List[B]): List[B] = a flatMap f
+  }
+
+  val datas: LazyList[Int] = LazyList.range(1, 10)
+
+  val result: List[Int] = intMonad.foldM(datas)(0)((b, a) => intMonad.unit(b + a))
+
+  println(result)
+
+  intMonad.skip(List(1))
+}
 
 
 
