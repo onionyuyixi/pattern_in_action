@@ -1,3 +1,5 @@
 spring:
   main:
     lazy-initialization: true
+server:
+  port: 9090
