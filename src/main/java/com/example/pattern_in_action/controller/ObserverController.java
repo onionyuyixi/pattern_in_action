@@ -26,6 +26,7 @@ public class ObserverController {
         yangcong.setSubject(subject);
 
         subject.register(onion);
+
         subject.register(yuyixi);
         subject.register(yangcong);
 
